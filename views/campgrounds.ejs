@@ -1,0 +1,8 @@
+<h1>This is the Campgrounds page</h1>
+
+<% campgrounds.forEach((campground) => { %>
+  <div>
+    <h4>The name is: <%= campground.name %></h4>
+    <img src="<%= campground.image %>" alt="">
+  </div>
+<% }) %>
