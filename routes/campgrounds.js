@@ -68,12 +68,86 @@ router.get('/:id', function(req,res){
   });
 });
 
+// =====================
+// EDIT CAMPGROUND ROUTE
+// =====================
+router.get('/:id/edit', checkCampgroundOwnership, function(req,res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+      res.render('campgrounds/edit', { campground: foundCampground }); 
+    });
+});
+
+// =======================
+// UPDATE CAMPGROUND ROUTE
+// =======================
+router.put('/:id', checkCampgroundOwnership, function(req,res){
+  // Find and update correct campground
+
+  // One way to collect data from edit form is to create an object
+  // var data = {
+  //   name: req.body.name,
+  //   image: req.body.image,
+  //   description: req.body.description
+  // }
+
+  // Another way is to edit 'edit' template's name
+  var data = req.body.campground;
+
+  Campground.findByIdAndUpdate(req.params.id, data, function(err, updatedCampground){
+    if(err){
+      console.log(err);
+      res.redirect('/campgrounds');
+    } else {
+      // Redirect somewhere
+      res.redirect('/campgrounds/'+updatedCampground.id);
+    }
+  });
+});
+
+// ========================
+// DESTROY CAMPGROUND ROUTE
+// ========================
+router.delete('/:id', checkCampgroundOwnership, function(req,res){
+  Campground.findByIdAndRemove(req.params.id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+      res.redirect('/campgrounds');
+    }
+    res.redirect('/campgrounds');
+  });
+  // Campground.findById()
+});
+
 // Middleware
 function isLoggedIn(req,res,next){
   if(req.isAuthenticated()){
     return next();
   }
   res.redirect('/login');
+}
+
+// Middleware function to check campground ownership
+function checkCampgroundOwnership(req,res,next){
+ // Is user logged in
+ if(req.isAuthenticated()){
+  Campground.findById(req.params.id, function(err, foundCampground){
+    if(err){
+      res.redirect('back');
+    } else {
+      // Does user have campground
+      if(foundCampground.author.id.equals(req.user._id)){
+        next();
+      } else {
+        // Otherwise, redirect
+        // If not - redirect user
+        res.redirect('back');
+        // res.redirect('/campgrounds/'+foundCampground.id);
+      }
+    }
+  });
+} else {
+  res.redirect('back'); 
+}
 }
 
 
