@@ -53,7 +53,7 @@ app.use('/campgrounds/:id/comments',commentRoutes);
 app.use('/', indexRoutes);
 
 
-app.listen('8080', '127.0.0.1', function(){
+app.listen(process.env.PORT || '8080', process.env.ID || '127.0.0.1', function(){
   var date = new Date();
     console.log('Server is listening on \"8080\" at '+ date);
 });
