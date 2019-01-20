@@ -16,7 +16,21 @@ var campgroundRoutes = require('./routes/campgrounds.js'),
     commentRoutes    = require('./routes/comments.js'),
     indexRoutes      = require('./routes/index.js');
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp', { useNewUrlParser: true });
+// mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp', { useNewUrlParser: true });
+const options = {
+  useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: 100, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
+
+
+
+var uri = 'mongodb://philippov:philippov@ds261644.mlab.com:61644/yelpcamp';  
+mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({ extended:true }));
 app.set('view engine', 'ejs');
