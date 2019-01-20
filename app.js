@@ -17,19 +17,7 @@ var campgroundRoutes = require('./routes/campgrounds.js'),
     indexRoutes      = require('./routes/index.js');
 
 // mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp', { useNewUrlParser: true });
-const options = {
-  useMongoClient: true,
-  autoIndex: false, // Don't build indexes
-  reconnectTries: 100, // Never stop trying to reconnect
-  reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 10, // Maintain up to 10 socket connections
-  // If not connected, return errors immediately rather than waiting for reconnect
-  bufferMaxEntries: 0
-};
-
-
-// mongoose.connect('mongodb://localhost:27017/yourdb', { useNewUrlParser: true });
-var uri = 'mongodb://heroku_q2xz73w9:9gbrj83kv532ritrr2on226i14@ds161724.mlab.com:61724/heroku_q2xz73w9';  
+var uri = 'mongodb://heroku_q2xz73w9:9gbrj83kv532ritrr2on226i14@ds161724.mlab.com:61724/heroku_q2xz73w9';
 mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({ extended:true }));
