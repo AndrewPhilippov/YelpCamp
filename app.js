@@ -29,7 +29,7 @@ const options = {
 
 
 
-var uri = 'mongodb://philippov:philippov@ds261644.mlab.com:61644/yelpcamp';  
+var uri = 'mongodb://philippov:philippov@ds261644.mlab.com:61644/yelpcamp?authSource=yourDB&w=1';  
 mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({ extended:true }));
