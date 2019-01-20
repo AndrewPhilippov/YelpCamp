@@ -28,8 +28,8 @@ const options = {
 };
 
 
-
-var uri = 'mongodb://philippov:philippov@ds261644.mlab.com:61644/yelpcamp';  
+// mongoose.connect('mongodb://localhost:27017/yourdb', { useNewUrlParser: true });
+var uri = 'mongodb://heroku_q2xz73w9:9gbrj83kv532ritrr2on226i14@ds161724.mlab.com:61724/heroku_q2xz73w9';  
 mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -67,7 +67,7 @@ app.use('/campgrounds/:id/comments',commentRoutes);
 app.use('/', indexRoutes);
 
 
-app.listen(process.env.PORT, process.env.ID, function(){
+app.listen(process.env.PORT || '8080', process.env.ID || '127.0.0.1', function(){
   var date = new Date();
     console.log('Server is listening on \"8080\" at '+ date);
 });
